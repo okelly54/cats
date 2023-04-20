@@ -8,20 +8,19 @@ import org.springframework.stereotype.Service;
 import com.example.demo.domain.Cat;
 
 @Service
-
 public class CatServiceList implements CatService {
+
 	List<Cat> cats = new ArrayList<>();
 
 	@Override
 	public Cat createCat(Cat c) {
 		this.cats.add(c);
 
-		Cat created = this.cats.get(cats.size() - 1);
-		return created;
+		return this.cats.get(cats.size() - 1);
 	}
 
 	@Override
-	public Cat getById(int id) {
+	public Cat get(int id) {
 		return this.cats.get(id);
 	}
 
@@ -36,7 +35,7 @@ public class CatServiceList implements CatService {
 	}
 
 	@Override
-	public Cat update(int id, String name, Boolean hasWhiskers, Boolean evil, Integer length) {
+	public Cat update(int id, Boolean hasWhiskers, String name, Boolean evil, Integer length) {
 		Cat c = cats.get(id);
 
 		if (hasWhiskers != null)
@@ -50,5 +49,4 @@ public class CatServiceList implements CatService {
 
 		return c;
 	}
-
 }

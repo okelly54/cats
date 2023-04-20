@@ -4,15 +4,12 @@ import java.util.List;
 
 import com.example.demo.domain.Cat;
 
-public interface CatService {
+public interface CatService {	
+
 	Cat createCat(Cat c);
-
-	Cat getById(int id);
-
+	Cat get(int id);
 	List<Cat> getAll();
-
 	Cat delete(int id);
-
-	Cat update(int id, String name, Boolean hasWhiskers, Boolean evil, Integer length);
+	Cat update(int id, Boolean hasWhiskers, String name,  Boolean evil, Integer length);
 
 }

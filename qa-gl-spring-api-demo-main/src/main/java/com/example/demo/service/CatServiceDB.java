@@ -9,12 +9,15 @@ import com.example.demo.domain.Cat;
 import com.example.demo.exception.CatNotFoundException;
 import com.example.demo.repo.CatRepo;
 
+// Make this the primary service used by the controller
 @Primary
 @Service
 public class CatServiceDB implements CatService {
+
 	private CatRepo repo;
 
 	public CatServiceDB(CatRepo repo) {
+		super();
 		this.repo = repo;
 	}
 
@@ -24,8 +27,10 @@ public class CatServiceDB implements CatService {
 	}
 
 	@Override
-	public Cat getById(int id) {
+	public Cat get(int id) {
+		// findById returns an Optional
 		return this.repo.findById((long) id).orElseThrow(() -> new CatNotFoundException());
+		// or a shortcut is (CatNotFoundException::new)
 	}
 
 	@Override
@@ -35,14 +40,14 @@ public class CatServiceDB implements CatService {
 
 	@Override
 	public Cat delete(int id) {
-		Cat removed = this.getById(id);
+		Cat removed = this.get(id);
 		this.repo.deleteById((long) id);
 		return removed;
 	}
 
 	@Override
-	public Cat update(int id, String name, Boolean hasWhiskers, Boolean evil, Integer length) {
-		Cat c = this.getById(id);
+	public Cat update(int id, Boolean hasWhiskers, String name, Boolean evil, Integer length) {
+		Cat c = this.get(id);
 
 		if (hasWhiskers != null)
 			c.setHasWhiskers(hasWhiskers);
@@ -55,4 +60,5 @@ public class CatServiceDB implements CatService {
 
 		return this.repo.save(c);
 	}
+
 }

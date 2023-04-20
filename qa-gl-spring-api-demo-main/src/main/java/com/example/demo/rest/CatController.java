@@ -18,16 +18,24 @@ import com.example.demo.service.CatService;
 
 @RestController
 public class CatController {
-
+	
+	// Data type is CatService, so any service that implements it can be used
 	private CatService service;
-
+		
 	public CatController(CatService service) {
+		super();
 		this.service = service;
 	}
 
+	@GetMapping("/")
+	public String greeting() {
+		return "Howdy, world!";
+	}
+
 	@PostMapping("/create")
-	public ResponseEntity<Cat> createCat(@RequestBody Cat c) {
+	public ResponseEntity<Cat> createCat(@RequestBody Cat c) {			
 		Cat created = this.service.createCat(c);
+		
 		return new ResponseEntity<>(created, HttpStatus.CREATED);
 	}
 
@@ -37,14 +45,12 @@ public class CatController {
 	}
 
 	@GetMapping("/get/{id}")
-	// If variable names don't match, you'd have to add it after @PathVariable
 	public Cat get(@PathVariable int id) {
-		return this.service.getById(id);
+		return this.service.get(id);		
 	}
 
 	@DeleteMapping("/remove/{id}")
 	public Cat delete(@PathVariable int id) {
-		// Could also pass in the object, but would return boolean
 		return this.service.delete(id);
 	}
 
@@ -54,6 +60,7 @@ public class CatController {
 			@RequestParam(name = "name", required = false) String name,
 			@RequestParam(name = "evil", required = false) Boolean evil,
 			@RequestParam(name = "length", required = false) Integer length) {
-		return this.service.update(id, name, hasWhiskers, evil, length);
+		
+		return this.service.update(id, hasWhiskers, name, evil, length);
 	}
 }

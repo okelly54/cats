@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.domain.Cat;
 
 @Repository
+// All standard CRUD functions are already available from JpaRepository
 public interface CatRepo extends JpaRepository<Cat, Long> {
+
+	// Custom method: find by name
+	// JpaRepository generates SQL query for following
 	List<Cat> findByName(String name);
 }
